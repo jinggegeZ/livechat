@@ -76,11 +76,8 @@
                 type="textarea"
                 v-model="textarea"
                 placeholder="和朋友开聊！！！！"
-                :autosize="{ minRows: 2, maxRows: 4}"
+                :autosize="{ minRows: 4, maxRows: 8}"
               ></el-input>
-            </div>
-            <div class="box2-2-3">
-                <div class="box2-2-3-1"> <el-button type="primary" round size="small">发送</el-button></div>
             </div>
           </div>
         </div>
@@ -136,7 +133,7 @@ export default {
 }
 .boxsearch {
   width: 100%;
-  height: 50px;
+  height: 100px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -144,13 +141,12 @@ export default {
 }
 .boxsearch1 {
   width: 80%;
-  height: 40px;
+  height: 50px;
 }
 .msgbox {
   display: flex;
   justify-content: center;
   margin-bottom: 5px;
-  margin: 5px;
 }
 .box1-1 {
   width: 95%;
@@ -203,7 +199,7 @@ export default {
 .box2-1-body {
   width: 100%;
   height: 600px;
-
+  background: chartreuse;
 }
 .box2-2-1 {
   width: 100%;
@@ -213,16 +209,6 @@ export default {
 }
 .box2-2-2 {
   width: 100%;
-  height: 60px;
-}
-.box2-2-3 {
-  width: 100%;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-}
-.box2-2-3-1 {
-  margin-right: 20px;
+  height: 100px;
 }
 </style>

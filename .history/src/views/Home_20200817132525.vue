@@ -203,7 +203,7 @@ export default {
 .box2-1-body {
   width: 100%;
   height: 600px;
-
+  background: chartreuse;
 }
 .box2-2-1 {
   width: 100%;
@@ -215,6 +215,7 @@ export default {
   width: 100%;
   height: 60px;
 }
+
 .box2-2-3 {
   width: 100%;
   height: 40px;

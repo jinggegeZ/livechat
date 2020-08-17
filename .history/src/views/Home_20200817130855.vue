@@ -6,7 +6,7 @@
         <div class="box1">
           <!-- 搜索用户名字 -->
           <div class="boxsearch">
-          <div class="boxsearch1"><el-input v-model="input" placeholder="寻找聊天的朋友"></el-input></div>
+          <div><el-input v-model="input" placeholder="寻找聊天的朋友"></el-input></div>
           </div>
           <!-- 信息盒子 -->
           <div class="msgbox">
@@ -76,11 +76,8 @@
                 type="textarea"
                 v-model="textarea"
                 placeholder="和朋友开聊！！！！"
-                :autosize="{ minRows: 2, maxRows: 4}"
+                :autosize="{ minRows: 4, maxRows: 8}"
               ></el-input>
-            </div>
-            <div class="box2-2-3">
-                <div class="box2-2-3-1"> <el-button type="primary" round size="small">发送</el-button></div>
             </div>
           </div>
         </div>
@@ -126,40 +123,27 @@ export default {
   background: white;
   display: flex;
   margin-top: 20px;
-  
 }
 .box1 {
   flex: 4;
   height: 100%;
   border: 1px solid rgb(228, 228, 228);
-  
 }
 .boxsearch {
   width: 100%;
-  height: 50px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: rgb(235,239,242);
-}
-.boxsearch1 {
-  width: 80%;
-  height: 40px;
+  height: 100px;
 }
 .msgbox {
   display: flex;
   justify-content: center;
-  margin-bottom: 5px;
-  margin: 5px;
 }
 .box1-1 {
   width: 95%;
   height: 99px;
-  border: 1px solid rgb(228, 228, 228);
+  border-bottom: 1px solid rgb(228, 228, 228);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: rgb(235,239,242);
 }
 .box1-1-1 {
   display: flex;
@@ -203,7 +187,7 @@ export default {
 .box2-1-body {
   width: 100%;
   height: 600px;
-
+  background: chartreuse;
 }
 .box2-2-1 {
   width: 100%;
@@ -213,16 +197,6 @@ export default {
 }
 .box2-2-2 {
   width: 100%;
-  height: 60px;
-}
-.box2-2-3 {
-  width: 100%;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-}
-.box2-2-3-1 {
-  margin-right: 20px;
+  height: 100px;
 }
 </style>

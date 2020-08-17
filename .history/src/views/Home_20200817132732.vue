@@ -203,7 +203,7 @@ export default {
 .box2-1-body {
   width: 100%;
   height: 600px;
-
+  background: chartreuse;
 }
 .box2-2-1 {
   width: 100%;
@@ -214,6 +214,9 @@ export default {
 .box2-2-2 {
   width: 100%;
   height: 60px;
+}
+.el-textarea__inner {
+  outline: none;
 }
 .box2-2-3 {
   width: 100%;
