@@ -9,17 +9,16 @@
           <div class="boxsearch1"><el-input v-model="input" placeholder="寻找聊天的朋友"></el-input></div>
           </div>
           <!-- 信息盒子 -->
-          <div class="msgBox">
-          <div class="msgbox" v-for="(item,index) in arrlist" :key="index">
+          <div class="msgbox" v-for="(item.index) in arrlist" :key="index">
             <div class="box1-1">
               <div class="box1-1-1">
                 <!-- 头像 -->
                 <div class="img" v-if="item.avatar != ''">
-                  <img class="img" :src="item.avatar" alt />
+                  <img :src="item.avatar" alt />
                 </div>
                 <!-- 用户信息 -->
                 <div>
-                  <div>{{item.username}}</div>
+                  <div>{{item.}}</div>
                   <div>个性签名</div>
                 </div>
               </div>
@@ -27,16 +26,13 @@
               <div>时间</div>
             </div>
           </div>
-          </div>
           
         </div>
         <!-- 聊天信息 -->
         <div class="box2">
           <div class="box2-1">
             <div class="box2-1-top">聊天室</div>
-            <div class="box2-1-body">
-
-            </div>
+            <div class="box2-1-body"></div>
           </div>
           <div class="box2-2">
             <div class="box2-2-1">
@@ -92,7 +88,6 @@ export default {
     };
   },
   methods: {},
-
   sockets:{
     // 通信的name
     //这里是监听connect事件
@@ -102,41 +97,17 @@ export default {
     // customEmit: function(val){
     //   console.log('this method was fired by the socket server. eg: io.emit("customEmit", data)')
     // },
-    //获取当期登录的信息
-    loginSuccess(data) {
-      console.log(data);
-      let obj = data
-      console.log(obj);
-    },
-    //获取离开用户信息
-    loginError(data) {
-      console.log(data);
-       let obj1 = data
-      console.log(obj1);
-    },
-    //获取用户列表
     userList(data){
-     if(data === {}){
-
-     }
-    else{
-      let arrlist = []
-      let arr = data
-      let abb = arr.filter(item => {
-        return item.username !==''
-      })
-      
-      this.arrlist = abb
-    }
+      console.log(data);
+      this.arrlist = data
+    
     }
   },
   mounted() {
          //触发socket连接
          
   },
-  watch: {
-
-  },
+  watch: {},
   computed: {},
 };
 </script>
@@ -168,11 +139,6 @@ export default {
   border: 1px solid rgb(228, 228, 228);
   
 }
-.msgBox {
-  width: 100%;
-  height: 700px;
-overflow: auto;
-}
 .boxsearch {
   width: 100%;
   height: 50px;
@@ -190,7 +156,6 @@ overflow: auto;
   justify-content: center;
   margin-bottom: 5px;
   margin: 5px;
-  z-index: -1;
 }
 .box1-1 {
   width: 95%;

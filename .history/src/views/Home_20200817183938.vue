@@ -34,9 +34,7 @@
         <div class="box2">
           <div class="box2-1">
             <div class="box2-1-top">聊天室</div>
-            <div class="box2-1-body">
-
-            </div>
+            <div class="box2-1-body"></div>
           </div>
           <div class="box2-2">
             <div class="box2-2-1">
@@ -102,18 +100,6 @@ export default {
     // customEmit: function(val){
     //   console.log('this method was fired by the socket server. eg: io.emit("customEmit", data)')
     // },
-    //获取当期登录的信息
-    loginSuccess(data) {
-      console.log(data);
-      let obj = data
-      console.log(obj);
-    },
-    //获取离开用户信息
-    loginError(data) {
-      console.log(data);
-       let obj1 = data
-      console.log(obj1);
-    },
     //获取用户列表
     userList(data){
      if(data === {}){

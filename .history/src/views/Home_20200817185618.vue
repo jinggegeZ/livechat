@@ -106,13 +106,6 @@ export default {
     loginSuccess(data) {
       console.log(data);
       let obj = data
-      console.log(obj);
-    },
-    //获取离开用户信息
-    loginError(data) {
-      console.log(data);
-       let obj1 = data
-      console.log(obj1);
     },
     //获取用户列表
     userList(data){

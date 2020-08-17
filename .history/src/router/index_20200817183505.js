@@ -8,10 +8,7 @@ Vue.use(VueRouter)
   {
     path: '/',
     name: 'Home',
-    component: Home,
-    meta:{
-      isLogin:true //进入路由必须需要登录的
-    }
+    component: Home
   },
   {
     path: '/login',

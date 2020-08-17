@@ -1,17 +1,14 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
-import login from '../views/login.vue'
+
 Vue.use(VueRouter)
 
   const routes = [
   {
     path: '/',
     name: 'Home',
-    component: Home,
-    meta:{
-      isLogin:true //进入路由必须需要登录的
-    }
+    component: Home
   },
   {
     path: '/login',
