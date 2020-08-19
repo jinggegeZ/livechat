@@ -46,7 +46,6 @@ export default {
       username: "",
       id: "",
       active: 0,
-      obj:{},
       imgs: [
         { img: require("../../public/image/01.png") },
         { img: require("../../public/image/02.png") },
@@ -82,19 +81,12 @@ export default {
           username: this.username,
           avatar: this.avatar,
         });
-        this.$router.push({
-          path:'/',
-          query:{
-            username: this.username,
-          avatar: this.avatar,
-          }
-        })
+        this.$router.push('/')
       }
     },
   },
   sockets: {
     loginSuccess(data) {
-      this.obj =data
       console.log(data);
     },
     loginError(data) {

@@ -40,7 +40,7 @@
             <div class="box2-1-top">聊天室</div>
             <div class="box2-1-body">
               <div class="talkbox">
-                <div v-if="last">
+              <div v-if="last">
                   <div class="midd" v-for="(item,index) in last" :key="index">
                     <div>
                       <img class="middbox" :src="item.avatar" alt />
@@ -80,7 +80,7 @@
           </div>
           <div class="box2-2">
             <div class="box2-2-1">
-              <div>
+              <div class="emoji">
                 <img class="img1" src="../../public/image/small.png" alt @click="choseemoji" />
               </div>
               <div>
@@ -100,7 +100,13 @@
               </div>
             </div>
             <div class="box2-2-2">
-              <VueEmoji ref="emoji" @input="onInput" v-model="textarea" ></VueEmoji>
+              <el-input
+                type="text"
+                v-model="textarea"
+                placeholder="和朋友开聊！！！！"
+                :autosize="{ minRows: 2, maxRows: 4}"
+                :clearable="true"
+              ></el-input>
             </div>
             <div class="box2-2-3">
               <div class="box2-2-3-1">
@@ -115,13 +121,10 @@
 </template>
 
 <script>
-import VueEmoji from "emoji-vue";
 export default {
   name: "",
   props: {},
-  components: {
-    VueEmoji,
-  },
+  components: {},
   data() {
     return {
       input: "",
@@ -135,8 +138,7 @@ export default {
       newarr: [],
       logout: {},
       Logouts: [],
-      last: [],
-      flag: false,
+      last:[]
     };
   },
   methods: {
@@ -151,18 +153,9 @@ export default {
       console.log(this.textarea);
     },
     //点击打开表情包数据
-    choseemoji() {
-      this.flag = true;
-    },
-    onInput(event) {
-      //事件。数据包含文本区域的值
-      console.log(event);
-      this.textarea = event.data
-    },
-    clearTextarea() {
-      this.$refs.emoji.clear();
-    },
-
+    choseemoji(){
+      this.flag = true
+    }
   },
 
   sockets: {
@@ -178,7 +171,7 @@ export default {
 
         this.arrlist = abb;
         console.log(this.arrlist);
-        this.last = data.slice(-1);
+        this.last = data.slice(-1)
         console.log(this.last);
       }
     },
@@ -342,7 +335,6 @@ export default {
   height: 50px;
   display: flex;
   align-items: center;
-  position: relative;
 }
 .box2-2-2 {
   width: 100%;
@@ -395,11 +387,9 @@ export default {
   height: 30px;
   border-radius: 50%;
 }
-.emoji {
-  position: absolute;
-  bottom: 50px;
-  width: 350px;
-  height: 250px;
+.emoji :hover{
+  width: 50px;
+  height: 20px;
   background: skyblue;
 }
 </style>

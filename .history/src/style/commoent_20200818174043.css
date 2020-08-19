@@ -15,7 +15,7 @@
     height: 100%;
   }
   .emoji-wysiwyg-editor {
-    width: 100% !important;
+    width: 550px !important;
     height: 60px;
     padding: 0!important;
   }
@@ -26,6 +26,6 @@
   }
   .emoji-picker-icon {
     position: absolute;
-    left: 0 !important;
+    left: 1 !important;
     
   }

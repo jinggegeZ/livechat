@@ -100,7 +100,7 @@
               </div>
             </div>
             <div class="box2-2-2">
-              <VueEmoji ref="emoji" @input="onInput" v-model="textarea" ></VueEmoji>
+              <VueEmoji ref="emoji" @onInput="input" :value="myText" v-model="textarea" />
             </div>
             <div class="box2-2-3">
               <div class="box2-2-3-1">
@@ -137,6 +137,7 @@ export default {
       Logouts: [],
       last: [],
       flag: false,
+      myText:''
     };
   },
   methods: {

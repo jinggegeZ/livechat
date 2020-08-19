@@ -40,40 +40,34 @@
             <div class="box2-1-top">聊天室</div>
             <div class="box2-1-body">
               <div class="talkbox">
-                <div v-if="last">
-                  <div class="midd" v-for="(item,index) in last" :key="index">
-                    <div>
-                      <img class="middbox" :src="item.avatar" alt />
+                <!--  好友发送信息 -->
+                <div class="leftbox">
+                  <div class="leftmsgbox" v-for="(item,index) in msgss" :key="index">
+                    <div style="display:flex" v-if="username !==item.name">
+                      <!--  头像 -->
+                      <div>
+                        <img class="rightmsgboximg" :src="item.avatar" alt />
+                      </div>
+                      <!--  msg -->
+                      <div class="leftmsgbox1">{{item.msg}}</div>
                     </div>
-                    {{item.username}}加入了聊天
                   </div>
                 </div>
-                <div v-if="logout !== ''">
-                  <div class="midd" v-for="(item,index) in Logouts" :key="index">
-                    <div>
-                      <img class="middbox" :src="item.avatar" alt />
+                <!--  本人发送信息 -->
+                <div class="rightbox">
+                  <div class="rightmsgbox" v-for="(item,index) in msgss" :key="index">
+                    <div style="display:flex" v-if="username === item.username">
+                      <!--  msg -->
+                      <div class="rightmsgbox1">{{item.msg}}</div>
+                      <!--  头像 -->
+                      <div>
+                        <img class="rightmsgboximg" :src="item.avatar" alt />
+                      </div>
                     </div>
-                    {{item.username}}退出了聊天
                   </div>
                 </div>
                 <div class="talkbox1" v-for="(item,index) in msgss" :key="index">
-                  <div class="talkbox2" v-if="item.username !== username">
-                    <!--  头像 -->
-                    <div>
-                      <img class="rightmsgboximg" :src="item.avatar" alt />
-                    </div>
-                    <!--  msg -->
-                    <div class="leftmsgbox1">{{item.msg}}</div>
-                  </div>
-
-                  <div class="talkbox3" v-if="item.username == username">
-                    <!--  msg -->
-                    <div class="leftmsgbox1">{{item.msg}}</div>
-                    <!--  头像 -->
-                    <div>
-                      <img class="rightmsgboximg" :src="item.avatar" alt />
-                    </div>
-                  </div>
+                  <div></div>
                 </div>
               </div>
             </div>
@@ -81,7 +75,7 @@
           <div class="box2-2">
             <div class="box2-2-1">
               <div>
-                <img class="img1" src="../../public/image/small.png" alt @click="choseemoji" />
+                <img class="img1" src="../../public/image/small.png" alt />
               </div>
               <div>
                 <img class="img1" src="../../public/image/GIF.png" alt />
@@ -100,7 +94,13 @@
               </div>
             </div>
             <div class="box2-2-2">
-              <VueEmoji ref="emoji" @input="onInput" v-model="textarea" ></VueEmoji>
+              <el-input
+                type="text"
+                v-model="textarea"
+                placeholder="和朋友开聊！！！！"
+                :autosize="{ minRows: 2, maxRows: 4}"
+                :clearable="true"
+              ></el-input>
             </div>
             <div class="box2-2-3">
               <div class="box2-2-3-1">
@@ -115,13 +115,10 @@
 </template>
 
 <script>
-import VueEmoji from "emoji-vue";
 export default {
   name: "",
   props: {},
-  components: {
-    VueEmoji,
-  },
+  components: {},
   data() {
     return {
       input: "",
@@ -133,10 +130,6 @@ export default {
       avatar: "",
       msgss: [],
       newarr: [],
-      logout: {},
-      Logouts: [],
-      last: [],
-      flag: false,
     };
   },
   methods: {
@@ -150,22 +143,29 @@ export default {
       this.textarea = "";
       console.log(this.textarea);
     },
-    //点击打开表情包数据
-    choseemoji() {
-      this.flag = true;
-    },
-    onInput(event) {
-      //事件。数据包含文本区域的值
-      console.log(event);
-      this.textarea = event.data
-    },
-    clearTextarea() {
-      this.$refs.emoji.clear();
-    },
-
   },
 
   sockets: {
+    // 通信的name
+    //这里是监听connect事件
+    // connect: function(){
+    //   this.id=this.$socket.id
+    // },
+    // customEmit: function(val){
+    //   console.log('this method was fired by the socket server. eg: io.emit("customEmit", data)')
+    // },
+    //获取当期登录的信息
+    // loginSuccess(data) {
+    //   console.log(data);
+    //   let obj = data;
+
+    // },
+    //获取离开用户信息
+    // loginError(data) {
+    //   console.log(data);
+    //   let obj1 = data;
+
+    // },
     //获取用户列表
     userList(data) {
       if (data === {}) {
@@ -177,9 +177,6 @@ export default {
         });
 
         this.arrlist = abb;
-        console.log(this.arrlist);
-        this.last = data.slice(-1);
-        console.log(this.last);
       }
     },
     //获取所有信息
@@ -188,15 +185,6 @@ export default {
       let mgsss = this.msgss;
       mgsss.push(data);
       console.log(mgsss);
-    },
-    //用户离线信息
-    delUser(data) {
-      console.log(data);
-      if (data) {
-        this.logout = data;
-        let logouts = this.Logouts;
-        logouts.push(data);
-      }
     },
   },
   mounted() {
@@ -320,13 +308,37 @@ export default {
   height: 95%;
   overflow: auto;
 }
-
+.leftbox {
+  width: 250px;
+  height: 570px;
+  float: left;
+}
+.rightbox {
+  width: 250px;
+  height: 570px;
+  float: right;
+}
+.leftmsgbox {
+  width: 100%;
+  height: 50px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 50px;
+}
 .leftmsgbox1 {
   padding: 5px;
   background: skyblue;
   margin-left: 10px;
 }
-
+.rightmsgbox {
+  width: 100%;
+  height: 50px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-bottom: 50px;
+}
 .rightmsgboximg {
   width: 40px;
   height: 40px;
@@ -342,7 +354,6 @@ export default {
   height: 50px;
   display: flex;
   align-items: center;
-  position: relative;
 }
 .box2-2-2 {
   width: 100%;
@@ -368,38 +379,5 @@ export default {
   height: 50px;
   display: flex;
   align-items: center;
-}
-.talkbox2 {
-  display: flex;
-  width: 100%;
-  height: 50px;
-  justify-content: flex-start;
-  align-items: center;
-}
-.talkbox3 {
-  display: flex;
-  width: 100%;
-  height: 50px;
-  justify-content: flex-end;
-  align-items: center;
-}
-.midd {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 12px;
-}
-.middbox {
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-}
-.emoji {
-  position: absolute;
-  bottom: 50px;
-  width: 350px;
-  height: 250px;
-  background: skyblue;
 }
 </style>

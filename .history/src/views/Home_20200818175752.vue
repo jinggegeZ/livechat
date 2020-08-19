@@ -100,7 +100,7 @@
               </div>
             </div>
             <div class="box2-2-2">
-              <VueEmoji ref="emoji" @input="onInput" v-model="textarea" ></VueEmoji>
+              <VueEmoji ref="emoji" @input="onInput" :value="myText" v-model="textarea" ></VueEmoji>
             </div>
             <div class="box2-2-3">
               <div class="box2-2-3-1">
@@ -137,6 +137,7 @@ export default {
       Logouts: [],
       last: [],
       flag: false,
+      myText:''
     };
   },
   methods: {
@@ -157,7 +158,7 @@ export default {
     onInput(event) {
       //事件。数据包含文本区域的值
       console.log(event);
-      this.textarea = event.data
+      this.textarea = event.data.value
     },
     clearTextarea() {
       this.$refs.emoji.clear();

@@ -84,10 +84,7 @@ export default {
         });
         this.$router.push({
           path:'/',
-          query:{
-            username: this.username,
-          avatar: this.avatar,
-          }
+          query:{obj :JSON.stringify(this.obj)}
         })
       }
     },

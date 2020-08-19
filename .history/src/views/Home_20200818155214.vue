@@ -40,22 +40,7 @@
             <div class="box2-1-top">聊天室</div>
             <div class="box2-1-body">
               <div class="talkbox">
-                <div v-if="last">
-                  <div class="midd" v-for="(item,index) in last" :key="index">
-                    <div>
-                      <img class="middbox" :src="item.avatar" alt />
-                    </div>
-                    {{item.username}}加入了聊天
-                  </div>
-                </div>
-                <div v-if="logout !== ''">
-                  <div class="midd" v-for="(item,index) in Logouts" :key="index">
-                    <div>
-                      <img class="middbox" :src="item.avatar" alt />
-                    </div>
-                    {{item.username}}退出了聊天
-                  </div>
-                </div>
+             
                 <div class="talkbox1" v-for="(item,index) in msgss" :key="index">
                   <div class="talkbox2" v-if="item.username !== username">
                     <!--  头像 -->
@@ -74,14 +59,32 @@
                       <img class="rightmsgboximg" :src="item.avatar" alt />
                     </div>
                   </div>
+                  <div v-if="item.flag === 0">
+                  <div class="midd">
+                    <div>
+                      <img class="rightmsgboximg" :src="item.avatar" alt />
+                    </div>
+                    {{item.username}}退出了聊天
+                  </div>
                 </div>
+                 <div>
+                  <div class="midd">
+                    <div>
+                      <img class="rightmsgboximg" :src="item.avatar" alt />
+                    </div>
+                    {{item.username}}加入了聊天
+                  </div>
+                </div>
+                </div>
+                
+                
               </div>
             </div>
           </div>
           <div class="box2-2">
             <div class="box2-2-1">
               <div>
-                <img class="img1" src="../../public/image/small.png" alt @click="choseemoji" />
+                <img class="img1" src="../../public/image/small.png" alt />
               </div>
               <div>
                 <img class="img1" src="../../public/image/GIF.png" alt />
@@ -100,7 +103,13 @@
               </div>
             </div>
             <div class="box2-2-2">
-              <VueEmoji ref="emoji" @input="onInput" v-model="textarea" ></VueEmoji>
+              <el-input
+                type="text"
+                v-model="textarea"
+                placeholder="和朋友开聊！！！！"
+                :autosize="{ minRows: 2, maxRows: 4}"
+                :clearable="true"
+              ></el-input>
             </div>
             <div class="box2-2-3">
               <div class="box2-2-3-1">
@@ -115,13 +124,10 @@
 </template>
 
 <script>
-import VueEmoji from "emoji-vue";
 export default {
   name: "",
   props: {},
-  components: {
-    VueEmoji,
-  },
+  components: {},
   data() {
     return {
       input: "",
@@ -135,8 +141,7 @@ export default {
       newarr: [],
       logout: {},
       Logouts: [],
-      last: [],
-      flag: false,
+      last:[]
     };
   },
   methods: {
@@ -150,19 +155,6 @@ export default {
       this.textarea = "";
       console.log(this.textarea);
     },
-    //点击打开表情包数据
-    choseemoji() {
-      this.flag = true;
-    },
-    onInput(event) {
-      //事件。数据包含文本区域的值
-      console.log(event);
-      this.textarea = event.data
-    },
-    clearTextarea() {
-      this.$refs.emoji.clear();
-    },
-
   },
 
   sockets: {
@@ -175,11 +167,10 @@ export default {
         let abb = arr.filter((item) => {
           return item.username !== "";
         });
-
         this.arrlist = abb;
-        console.log(this.arrlist);
-        this.last = data.slice(-1);
+        this.last = arrlist[arrlist.length-1]
         console.log(this.last);
+        // this.msgss.push(this.last)
       }
     },
     //获取所有信息
@@ -193,9 +184,9 @@ export default {
     delUser(data) {
       console.log(data);
       if (data) {
-        this.logout = data;
-        let logouts = this.Logouts;
-        logouts.push(data);
+        data.flag =0
+        this.msgss.push(data)
+        
       }
     },
   },
@@ -342,7 +333,6 @@ export default {
   height: 50px;
   display: flex;
   align-items: center;
-  position: relative;
 }
 .box2-2-2 {
   width: 100%;
@@ -389,17 +379,5 @@ export default {
   justify-content: center;
   align-items: center;
   font-size: 12px;
-}
-.middbox {
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-}
-.emoji {
-  position: absolute;
-  bottom: 50px;
-  width: 350px;
-  height: 250px;
-  background: skyblue;
 }
 </style>

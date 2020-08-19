@@ -82,7 +82,9 @@
             <div class="box2-2-1">
               <div>
                 <img class="img1" src="../../public/image/small.png" alt @click="choseemoji" />
+                <VueEmoji ref="emoji" :value="myText" />
               </div>
+                
               <div>
                 <img class="img1" src="../../public/image/GIF.png" alt />
               </div>
@@ -100,7 +102,13 @@
               </div>
             </div>
             <div class="box2-2-2">
-              <VueEmoji ref="emoji" @input="onInput" v-model="textarea" ></VueEmoji>
+              <el-input
+                type="text"
+                v-model="textarea"
+                placeholder="和朋友开聊！！！！"
+                :autosize="{ minRows: 2, maxRows: 4}"
+                :clearable="true"
+              ></el-input>
             </div>
             <div class="box2-2-3">
               <div class="box2-2-3-1">
@@ -156,13 +164,10 @@ export default {
     },
     onInput(event) {
       //事件。数据包含文本区域的值
-      console.log(event);
-      this.textarea = event.data
     },
     clearTextarea() {
       this.$refs.emoji.clear();
     },
-
   },
 
   sockets: {

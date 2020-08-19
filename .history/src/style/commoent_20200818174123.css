@@ -15,17 +15,17 @@
     height: 100%;
   }
   .emoji-wysiwyg-editor {
-    width: 100% !important;
+    width: 580px !important;
     height: 60px;
     padding: 0!important;
   }
   
   .emoji-picker-container {
-    width: 100% !important;
+    width: 580px !important;
     height: 60px;
   }
   .emoji-picker-icon {
     position: absolute;
-    left: 0 !important;
+    left: 1 !important;
     
   }
