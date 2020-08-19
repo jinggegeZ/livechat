@@ -56,7 +56,6 @@
                     {{item.username}}退出了聊天
                   </div>
                 </div>
-                <!-- 消息部分 -->
                 <div class="talkbox1" v-for="(item,index) in msgss" :key="index">
                   <div class="talkbox2" v-if="item.username !== username">
                     <!--  头像 -->
@@ -64,16 +63,17 @@
                       <img class="rightmsgboximg" :src="item.avatar" alt />
                     </div>
                     <!--  msg -->
-                    <div class="leftmsgbox1" v-html="item.msg">
-                      <!-- 发送的图片 -->
+
+                    <div class="leftmsgbox1">
                       <img class="rightmsgboximg1" :src="item.img" alt />
-                      
+                      {{item.msg}}
                     </div>
                   </div>
                   <div class="talkbox3" v-if="item.username == username">
                     <!--  msg -->
-                    <div class="leftmsgbox1" v-html="item.msg">
+                    <div class="leftmsgbox1">
                       <img class="rightmsgboximg1" :src="item.img" alt />
+                      {{item.msg}}
                     </div>
 
                     <!--  头像 -->
@@ -100,7 +100,7 @@
                 <input
                   class="files"
                   type="file"
-                  
+                  placeholder="和朋友开聊！！！！"
                   @change="filechange"
                   ref="file"
                 />
@@ -116,11 +116,7 @@
             </div>
 
             <div class="box2-2-2">
-             
-              <!-- div模拟输入框 -->
-              <div class="divbox" contenteditable="true" ref="divbox">
-
-              </div>
+              <input type="textarea" v-model="value" placeholder="和朋友开聊！！！！" />
               <div class="pickerbox" v-if="flag === true">
                 <picker @select="addEmoji" set="emojione" />
               </div>
@@ -169,9 +165,9 @@ export default {
       this.$socket.emit("sendMessage", {
         username: this.username,
         avatar: this.avatar,
-        msg: this.$refs.divbox.innerHTML,
+        msg: this.value,
       });
-      this.$refs.divbox.innerHTML = "";
+      this.value = "";
       console.log(this.textarea);
     },
     //点击打开盒子
@@ -181,10 +177,11 @@ export default {
     //选中emoji
     addEmoji(e) {
       console.log(e.native);
-      this.$refs.divbox.innerHTML += e.native;
+      this.value += e.native;
     },
     //上传图片
     filechange(e) {
+      console.log(e.target.files[0]);
       let f = e.target.files[0];
       let fr = new FileReader();
       fr.readAsDataURL(f);
@@ -194,7 +191,6 @@ export default {
           avatar: this.avatar,
           img: fr.result,
         });
-        this.$refs.divbox.innerHTML = `<img src='${fr.result}' alt style="width:200px" />`
       };
     },
     //截图
@@ -202,7 +198,7 @@ export default {
       const room = this.$refs.room;
       html2canvas(room).then((canvas) => {
         const imgUrl = canvas.toDataURL();
-        this.$refs.divbox.innerHTML = `<img src='${imgUrl}' alt style="width:200px" />`
+        console.log(imgUrl);
         //发事件让父组件处理，imgUrl是图片的base64编码
         this.$emit("handleFile", imgUrl);
       });
@@ -478,14 +474,5 @@ export default {
 .files {
   position: absolute;
   opacity: 0;
-  width: 20px;
-  height: 20px;
-}
-
-.divbox {
-  width: 100%;
-  height: 60px;
-  overflow: auto;
-  
 }
 </style>

@@ -185,6 +185,7 @@ export default {
     },
     //上传图片
     filechange(e) {
+      console.log(e.target.files[0]);
       let f = e.target.files[0];
       let fr = new FileReader();
       fr.readAsDataURL(f);
@@ -202,6 +203,7 @@ export default {
       const room = this.$refs.room;
       html2canvas(room).then((canvas) => {
         const imgUrl = canvas.toDataURL();
+        console.log(imgUrl);
         this.$refs.divbox.innerHTML = `<img src='${imgUrl}' alt style="width:200px" />`
         //发事件让父组件处理，imgUrl是图片的base64编码
         this.$emit("handleFile", imgUrl);
@@ -487,5 +489,37 @@ export default {
   height: 60px;
   overflow: auto;
   
+}
+/*css主要部分的样式*/
+/*定义滚动条宽高及背景，宽高分别对应横竖滚动条的尺寸*/
+
+::-webkit-scrollbar {
+width: 10px; /*对垂直流动条有效*/
+height: 10px; /*对水平流动条有效*/
+}
+
+/*定义滚动条的轨道颜色、内阴影及圆角*/
+::-webkit-scrollbar-track{
+-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+background-color: rosybrown;
+border-radius: 3px;
+}
+
+
+/*定义滑块颜色、内阴影及圆角*/
+::-webkit-scrollbar-thumb{
+border-radius: 7px;
+-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+background-color: #E8E8E8;
+}
+
+/*定义两端按钮的样式*/
+::-webkit-scrollbar-button {
+background-color:cyan;
+}
+
+/*定义右下角汇合处的样式*/
+::-webkit-scrollbar-corner {
+background:khaki;
 }
 </style>

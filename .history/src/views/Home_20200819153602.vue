@@ -185,6 +185,7 @@ export default {
     },
     //上传图片
     filechange(e) {
+      console.log(e.target.files[0]);
       let f = e.target.files[0];
       let fr = new FileReader();
       fr.readAsDataURL(f);
@@ -202,6 +203,7 @@ export default {
       const room = this.$refs.room;
       html2canvas(room).then((canvas) => {
         const imgUrl = canvas.toDataURL();
+        console.log(imgUrl);
         this.$refs.divbox.innerHTML = `<img src='${imgUrl}' alt style="width:200px" />`
         //发事件让父组件处理，imgUrl是图片的base64编码
         this.$emit("handleFile", imgUrl);
@@ -486,6 +488,6 @@ export default {
   width: 100%;
   height: 60px;
   overflow: auto;
-  
+  overflow-y: hidden;
 }
 </style>

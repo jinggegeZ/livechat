@@ -185,6 +185,7 @@ export default {
     },
     //上传图片
     filechange(e) {
+      console.log(e.target.files[0]);
       let f = e.target.files[0];
       let fr = new FileReader();
       fr.readAsDataURL(f);

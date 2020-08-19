@@ -1,5 +1,5 @@
 <template>
-  <div class="content" ref="room">
+  <div class="content">
     <div class="content-c">
       <div class="box">
         <!-- 用户信息 -->
@@ -56,7 +56,6 @@
                     {{item.username}}退出了聊天
                   </div>
                 </div>
-                <!-- 消息部分 -->
                 <div class="talkbox1" v-for="(item,index) in msgss" :key="index">
                   <div class="talkbox2" v-if="item.username !== username">
                     <!--  头像 -->
@@ -64,16 +63,17 @@
                       <img class="rightmsgboximg" :src="item.avatar" alt />
                     </div>
                     <!--  msg -->
-                    <div class="leftmsgbox1" v-html="item.msg">
-                      <!-- 发送的图片 -->
+
+                    <div class="leftmsgbox1">
                       <img class="rightmsgboximg1" :src="item.img" alt />
-                      
+                      {{item.msg}}
                     </div>
                   </div>
                   <div class="talkbox3" v-if="item.username == username">
                     <!--  msg -->
-                    <div class="leftmsgbox1" v-html="item.msg">
+                    <div class="leftmsgbox1">
                       <img class="rightmsgboximg1" :src="item.img" alt />
+                      {{item.msg}}
                     </div>
 
                     <!--  头像 -->
@@ -100,7 +100,7 @@
                 <input
                   class="files"
                   type="file"
-                  
+                  placeholder="和朋友开聊！！！！"
                   @change="filechange"
                   ref="file"
                 />
@@ -116,11 +116,7 @@
             </div>
 
             <div class="box2-2-2">
-             
-              <!-- div模拟输入框 -->
-              <div class="divbox" contenteditable="true" ref="divbox">
-
-              </div>
+              <input type="textarea" v-model="value" placeholder="和朋友开聊！！！！" />
               <div class="pickerbox" v-if="flag === true">
                 <picker @select="addEmoji" set="emojione" />
               </div>
@@ -139,7 +135,6 @@
 
 <script>
 import { Picker } from "emoji-mart-vue";
-import html2canvas from 'html2canvas'
 export default {
   name: "",
   props: {},
@@ -169,9 +164,9 @@ export default {
       this.$socket.emit("sendMessage", {
         username: this.username,
         avatar: this.avatar,
-        msg: this.$refs.divbox.innerHTML,
+        msg: this.value,
       });
-      this.$refs.divbox.innerHTML = "";
+      this.value = "";
       console.log(this.textarea);
     },
     //点击打开盒子
@@ -181,10 +176,11 @@ export default {
     //选中emoji
     addEmoji(e) {
       console.log(e.native);
-      this.$refs.divbox.innerHTML += e.native;
+      this.value += e.native;
     },
     //上传图片
     filechange(e) {
+      console.log(e.target.files[0]);
       let f = e.target.files[0];
       let fr = new FileReader();
       fr.readAsDataURL(f);
@@ -194,7 +190,6 @@ export default {
           avatar: this.avatar,
           img: fr.result,
         });
-        this.$refs.divbox.innerHTML = `<img src='${fr.result}' alt style="width:200px" />`
       };
     },
     //截图
@@ -202,7 +197,6 @@ export default {
       const room = this.$refs.room;
       html2canvas(room).then((canvas) => {
         const imgUrl = canvas.toDataURL();
-        this.$refs.divbox.innerHTML = `<img src='${imgUrl}' alt style="width:200px" />`
         //发事件让父组件处理，imgUrl是图片的base64编码
         this.$emit("handleFile", imgUrl);
       });
@@ -243,16 +237,6 @@ export default {
       console.log(data);
 
       this.msgss.push(data);
-    },
-     handleFile(e) {
-      const file = e.target.files[0]
-      const reader = new FileReader() // 创建读取文件对象
-      reader.readAsDataURL(file) // 发起异步请求，读取文件
-      reader.onload = (e) => {
-        // 文件读取完成后
-        // 读取完成后，将结果赋值给img的src
-        this.$emit('handleFile', e.target.result)
-      }
     },
   },
   mounted() {
@@ -478,14 +462,6 @@ export default {
 .files {
   position: absolute;
   opacity: 0;
-  width: 20px;
-  height: 20px;
-}
-
-.divbox {
-  width: 100%;
-  height: 60px;
-  overflow: auto;
-  
 }
 </style>
+<!DOCTYPE html><html lang=en><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1"><link rel=icon href=/chatroom/favicon.ico><title>chatroom</title><link href=/chatroom/css/app.bd24ba05.css rel=preload as=style><link href=/chatroom/css/chunk-vendors.359e40b6.css rel=preload as=style><link href=/chatroom/js/app.c3db5718.js rel=preload as=script><link href=/chatroom/js/chunk-vendors.76afd121.js rel=preload as=script><link href=/chatroom/css/chunk-vendors.359e40b6.css rel=stylesheet><link href=/chatroom/css/app.bd24ba05.css rel=stylesheet></head><body><noscript><strong>We're sorry but chatroom doesn't work properly without JavaScript enabled. Please enable it to continue.</strong></noscript><div id=app></div><script src=/chatroom/js/chunk-vendors.76afd121.js></script><script src=/chatroom/js/app.c3db5718.js></script></body></html>

@@ -100,7 +100,7 @@
                 <input
                   class="files"
                   type="file"
-                  
+                  placeholder="和朋友开聊！！！！"
                   @change="filechange"
                   ref="file"
                 />
@@ -116,7 +116,7 @@
             </div>
 
             <div class="box2-2-2">
-             
+              <input type="textarea" v-model="value" placeholder="和朋友开聊！！！！" />
               <!-- div模拟输入框 -->
               <div class="divbox" contenteditable="true" ref="divbox">
 
@@ -185,6 +185,7 @@ export default {
     },
     //上传图片
     filechange(e) {
+      console.log(e.target.files[0]);
       let f = e.target.files[0];
       let fr = new FileReader();
       fr.readAsDataURL(f);
@@ -194,7 +195,6 @@ export default {
           avatar: this.avatar,
           img: fr.result,
         });
-        this.$refs.divbox.innerHTML = `<img src='${fr.result}' alt style="width:200px" />`
       };
     },
     //截图
@@ -202,7 +202,7 @@ export default {
       const room = this.$refs.room;
       html2canvas(room).then((canvas) => {
         const imgUrl = canvas.toDataURL();
-        this.$refs.divbox.innerHTML = `<img src='${imgUrl}' alt style="width:200px" />`
+        console.log(imgUrl);
         //发事件让父组件处理，imgUrl是图片的base64编码
         this.$emit("handleFile", imgUrl);
       });
@@ -478,14 +478,10 @@ export default {
 .files {
   position: absolute;
   opacity: 0;
-  width: 20px;
-  height: 20px;
 }
-
 .divbox {
   width: 100%;
   height: 60px;
-  overflow: auto;
-  
+  background: skyblue;
 }
 </style>
